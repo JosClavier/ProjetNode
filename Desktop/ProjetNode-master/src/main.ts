@@ -8,6 +8,16 @@ const PORT = 1337;
 const server = http.createServer(app);
 server.listen(PORT);
 
+import { MetricsHandler } from './metrics'
+app.get('/metrics.json', (req: any, res: any) => {
+  MetricsHandler.get((err: Error | null, result?: any) => {
+    if (err) {
+      throw err
+    }
+    res.json(result)
+  })
+})
+
 app.set('view engine','ejs')
 
 app.use(express.static('public'))
